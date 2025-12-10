@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>History Study Flashcards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fffaf0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .flashcard {
+            width: 400px;
+            height: 250px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: #ffd1dc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard .front, .flashcard .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flashcard .back {
+            transform: rotateY(180deg);
+            background-color: #caffbf;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            border: none;
+            background-color: #a0c4ff;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: #6a9fff;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="flashcard" id="flashcard">
+            <div class="front" id="front">Click to start</div>
+            <div class="back" id="back"></div>
+        </div>
+        <button onclick="nextCard()">Next Card</button>
+    </div>
+
+    <script>
+        const cards = [
+            {term: "Aftermath of World War II", definition: "The period following WWII that shaped global politics, including reconstruction, the United Nations, and the start of the Cold War."},
+            {term: "Cold War Ideologies", definition: "The ideological conflict between capitalism/democracy (USA) and communism (USSR)."},
+            {term: "Yalta Conference", definition: "1945 meeting of Churchill, Roosevelt, and Stalin to discuss postwar Europe and the division of Germany."},
+            {term: "Potsdam Conference", definition: "1945 meeting between Truman, Churchill, and Stalin to finalize plans for postwar Europe and address Germany's surrender."},
+            {term: "The Marshall Plan", definition: "US program providing economic aid to rebuild Western Europe after WWII."},
+            {term: "The Fair Deal", definition: "Harry Truman’s domestic program expanding social programs and civil rights initiatives."},
+            {term: "The G.I. Bill", definition: "Legislation providing education and housing benefits to WWII veterans."},
+            {term: "William Levitt", definition: "Developer who pioneered mass-produced suburban housing, like Levittown."},
+            {term: "Dwight Eisenhower", definition: "34th President of the U.S.; former WWII general; promoted Interstate Highway System."},
+            {term: "Adlai Stevenson", definition: "Democratic presidential candidate in 1952 and 1956, known for intellect and eloquence."},
+            {term: "House of Un-American Activities Committee", definition: "Congressional committee investigating alleged disloyalty and subversive activities."},
+            {term: "Hollywood Ten", definition: "Group of screenwriters and directors blacklisted for refusing to answer HUAC questions."},
+            {term: "Alger Hiss", definition: "Government official accused of being a Soviet spy; convicted of perjury."},
+            {term: "Whittaker Chambers", definition: "Former communist who testified against Alger Hiss."},
+            {term: "Richard Nixon", definition: "Vice President under Eisenhower; later President; involved in HUAC and anti-communism."},
+            {term: "Joseph McCarthy", definition: "Senator who led anti-communist investigations in the 1950s."},
+            {term: "Red Baiting", definition: "Accusing someone of being a communist or socialist to discredit them."},
+            {term: "Julius and Ethel Rosenberg", definition: "Couple executed for allegedly passing atomic secrets to the USSR."},
+            {term: "Lavender Scare", definition: "Government campaign targeting LGBTQ employees, similar to anti-communist purges."},
+            {term: "Harry Hay", definition: "Early LGBTQ activist; co-founded the Mattachine Society."},
+            {term: "Del Martin", definition: "LGBTQ activist; co-founded Daughters of Bilitis."},
+            {term: "Phyllis Lyon", definition: "LGBTQ activist; co-founded Daughters of Bilitis with Del Martin."},
+            {term: "Wiley-Dondero Act", definition: "Legislation related to housing and urban development."},
+            {term: "Highway Act of 1956", definition: "Created the Interstate Highway System under Eisenhower."},
+            // Add remaining terms similarly...
+        ];
+
+        let currentIndex = 0;
+        const flashcard = document.getElementById("flashcard");
+        const front = document.getElementById("front");
+        const back = document.getElementById("back");
+
+        function showCard() {
+            front.innerText = cards[currentIndex].term;
+            back.innerText = cards[currentIndex].definition;
+            flashcard.classList.remove("flipped");
+        }
+
+        flashcard.addEventListener("click", () => {
+            flashcard.classList.toggle("flipped");
+        });
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % cards.length;
+            showCard();
+        }
+
+        showCard();
+    </script>
+</body>
+</html>
