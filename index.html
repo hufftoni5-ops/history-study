@@ -1,135 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>History Study Flashcards</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fffaf0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .flashcard {
-            width: 400px;
-            height: 250px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            background-color: #ffd1dc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            position: relative;
-        }
-
-        .flashcard.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .flashcard .front, .flashcard .back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .flashcard .back {
-            transform: rotateY(180deg);
-            background-color: #caffbf;
-            border-radius: 15px;
-            padding: 20px;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            border-radius: 10px;
-            border: none;
-            background-color: #a0c4ff;
-            color: #333;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        button:hover {
-            background-color: #6a9fff;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>History Study Flashcards</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff7f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6f91;
+        text-align: center;
+    }
+    .flashcard {
+        width: 500px;
+        height: 250px;
+        background-color: #ffd6e0;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        font-size: 1.2em;
+        cursor: pointer;
+        margin-bottom: 20px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
+        user-select: none;
+    }
+    .flashcard.flipped {
+        transform: rotateY(180deg);
+    }
+    .front, .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .back {
+        background-color: #caffbf;
+        border-radius: 15px;
+        transform: rotateY(180deg);
+    }
+    .buttons {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 10px;
+        border: none;
+        background-color: #a0c4ff;
+        color: #333;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    button:hover {
+        background-color: #6a9fff;
+    }
+</style>
 </head>
 <body>
-    <div>
-        <div class="flashcard" id="flashcard">
-            <div class="front" id="front">Click to start</div>
-            <div class="back" id="back"></div>
-        </div>
-        <button onclick="nextCard()">Next Card</button>
-    </div>
 
-    <script>
-        const cards = [
-            {term: "Aftermath of World War II", definition: "The period following WWII that shaped global politics, including reconstruction, the United Nations, and the start of the Cold War."},
-            {term: "Cold War Ideologies", definition: "The ideological conflict between capitalism/democracy (USA) and communism (USSR)."},
-            {term: "Yalta Conference", definition: "1945 meeting of Churchill, Roosevelt, and Stalin to discuss postwar Europe and the division of Germany."},
-            {term: "Potsdam Conference", definition: "1945 meeting between Truman, Churchill, and Stalin to finalize plans for postwar Europe and address Germany's surrender."},
-            {term: "The Marshall Plan", definition: "US program providing economic aid to rebuild Western Europe after WWII."},
-            {term: "The Fair Deal", definition: "Harry Truman’s domestic program expanding social programs and civil rights initiatives."},
-            {term: "The G.I. Bill", definition: "Legislation providing education and housing benefits to WWII veterans."},
-            {term: "William Levitt", definition: "Developer who pioneered mass-produced suburban housing, like Levittown."},
-            {term: "Dwight Eisenhower", definition: "34th President of the U.S.; former WWII general; promoted Interstate Highway System."},
-            {term: "Adlai Stevenson", definition: "Democratic presidential candidate in 1952 and 1956, known for intellect and eloquence."},
-            {term: "House of Un-American Activities Committee", definition: "Congressional committee investigating alleged disloyalty and subversive activities."},
-            {term: "Hollywood Ten", definition: "Group of screenwriters and directors blacklisted for refusing to answer HUAC questions."},
-            {term: "Alger Hiss", definition: "Government official accused of being a Soviet spy; convicted of perjury."},
-            {term: "Whittaker Chambers", definition: "Former communist who testified against Alger Hiss."},
-            {term: "Richard Nixon", definition: "Vice President under Eisenhower; later President; involved in HUAC and anti-communism."},
-            {term: "Joseph McCarthy", definition: "Senator who led anti-communist investigations in the 1950s."},
-            {term: "Red Baiting", definition: "Accusing someone of being a communist or socialist to discredit them."},
-            {term: "Julius and Ethel Rosenberg", definition: "Couple executed for allegedly passing atomic secrets to the USSR."},
-            {term: "Lavender Scare", definition: "Government campaign targeting LGBTQ employees, similar to anti-communist purges."},
-            {term: "Harry Hay", definition: "Early LGBTQ activist; co-founded the Mattachine Society."},
-            {term: "Del Martin", definition: "LGBTQ activist; co-founded Daughters of Bilitis."},
-            {term: "Phyllis Lyon", definition: "LGBTQ activist; co-founded Daughters of Bilitis with Del Martin."},
-            {term: "Wiley-Dondero Act", definition: "Legislation related to housing and urban development."},
-            {term: "Highway Act of 1956", definition: "Created the Interstate Highway System under Eisenhower."},
-            // Add remaining terms similarly...
-        ];
+<h1>History Study Flashcards</h1>
 
-        let currentIndex = 0;
-        const flashcard = document.getElementById("flashcard");
-        const front = document.getElementById("front");
-        const back = document.getElementById("back");
+<div class="flashcard" id="flashcard">
+    <div class="front" id="front">Click to start</div>
+    <div class="back" id="back"></div>
+</div>
 
-        function showCard() {
-            front.innerText = cards[currentIndex].term;
-            back.innerText = cards[currentIndex].definition;
-            flashcard.classList.remove("flipped");
-        }
+<div class="buttons">
+    <button onclick="prevCard()">Previous Card</button>
+    <button onclick="nextCard()">Next Card</button>
+</div>
 
-        flashcard.addEventListener("click", () => {
-            flashcard.classList.toggle("flipped");
-        });
+<script>
+const cards = [
+    {term: "Aftermath of World War II", definition: "Post-WWII reconstruction, rise of the US as a superpower, and start of Cold War."},
+    {term: "Cold War Ideologies", definition: "USA = capitalism & democracy, USSR = communism & authoritarianism."},
+    {term: "Issues between the Soviet Union & the United States", definition: "Tensions over influence, arms race, nuclear threat, and Europe."},
+    {term: "Yalta Conference", definition: "1945 meeting of Roosevelt, Churchill, and Stalin; planned postwar Europe."},
+    {term: "Potsdam Conference", definition: "1945 meeting of Truman, Churchill, Stalin; finalized plans for Germany."},
+    {term: "The Marshall Plan", definition: "U.S. aid to rebuild Western Europe and prevent communism."},
+    {term: "The Fair Deal", definition: "Truman’s domestic program expanding welfare and civil rights."},
+    {term: "The G.I. Bill", definition: "Benefits for WWII veterans including education and housing."},
+    {term: "William Levitt", definition: "Developer of mass-produced suburban housing, e.g., Levittown."},
+    {term: "Dwight Eisenhower", definition: "34th President; Interstate Highway System; moderate Republican."},
+    {term: "Adlai Stevenson", definition: "Democratic presidential candidate 1952 & 1956; lost to Eisenhower."},
+    {term: "House of Un-American Activities Committee", definition: "Investigated alleged communists in government and entertainment."},
+    {term: "Hollywood Ten", definition: "Screenwriters/directors blacklisted for refusing to testify before HUAC."},
+    {term: "Alger Hiss", definition: "Government official accused of being a Soviet spy; convicted of perjury."},
+    {term: "Whittaker Chambers", definition: "Former communist who testified against Alger Hiss."},
+    {term: "Richard Nixon", definition: "Vice President under Eisenhower; involved in anti-communist investigations."},
+    {term: "Joseph McCarthy", definition: "Senator who led anti-communist witch hunts in the 1950s."},
+    {term: "Red Baiting", definition: "Accusing someone of being a communist to discredit them."},
+    {term: "Julius and Ethel Rosenberg", definition: "Executed for allegedly passing atomic secrets to the USSR."},
+    {term: "Lavender Scare", definition: "Targeting LGBTQ employees in government as security risks."},
+    {term: "Harry Hay", definition: "Early LGBTQ activist; co-founded the Mattachine Society."},
+    {term: "Del Martin & Phyllis Lyon", definition: "Co-founded Daughters of Bilitis, early LGBTQ organization."},
+    {term: "Wiley-Dondero Act", definition: "Legislation related to housing and urban development."},
+    {term: "Highway Act of 1956", definition: "Created the Interstate Highway System under Eisenhower."},
+    {term: "Woolworth's Sit-Ins", definition: "Nonviolent civil rights protests against segregated lunch counters."},
+    {term: "Student Nonviolent Coordinating Committee (SNCC)", definition: "Civil rights group formed by students."},
+    {term: "Importance of Sit-Ins", definition: "Drew national attention to segregation; nonviolent protest tactic."},
+    {term: "Effects of Patriotism on Activism", definition: "Activists framed civil rights work as patriotic duty."},
+    {term: "John F. Kennedy", definition: "35th President; New Frontier; civil rights supporter."},
+    {term: "Kennedy vs. Nixon Debate", definition: "First televised debate; showcased power of TV in politics."},
+    {term: "Fidel Castro", definition: "Cuban revolutionary leader allied with USSR."},
+    {term: "Kennedy's Camelot", definition: "Idealized vision of Kennedy’s presidency."},
+    {term: "The New Frontier", definition: "Kennedy’s domestic & foreign policy program."},
+    {term: "The Great Society", definition: "LBJ’s programs for poverty, education, healthcare, civil rights."},
+    {term: "The Alliance for Progress", definition: "US aid program for Latin America to reduce poverty and counter communism."},
+    {term: "Peace Corps", definition: "Volunteer program to help developing nations and promote US goodwill."},
+    {term: "Young Americans for Freedom", definition: "Conservative youth organization advocating limited government."},
+    {term: "Students for a Democratic Society", definition: "Progressive student activist organization in the 1960s."},
+    {term: "Congress of Racial Equality (CORE)", definition: "Civil rights group using nonviolent protest."},
+    {term: "Southern Christian Leadership Conference (SCLC)", definition: "Led by MLK Jr.; organized marches and protests."},
+    {term: "Martin Luther King, Jr.", definition: "Leader of civil rights movement; advocated nonviolence."},
+    {term: "James Farmer", definition: "Co-founder of CORE."},
+    {term: "John Lewis", definition: "SNCC leader; civil rights activist."},
+    {term: "Yuri Gagarin", definition: "First human in space; part of Space Race."},
+    {term: "Freedom Rides/Freedom Riders", definition: "Integrated bus trips challenging segregation."},
+    {term: "Anniston, Alabama", definition: "Site where Freedom Riders buses were attacked."},
+    {term: "Brown v. Board of Education", definition: "1954 Supreme Court decision ending school segregation."},
+    {term: "Boynton v. Virginia", definition: "1960 ruling outlawing segregation in bus terminals."},
+    {term: "Eugene 'Bull' Connor", definition: "Birmingham police chief; used force against civil rights activists."},
+    {term: "Birmingham, Alabama", definition: "Major civil rights protests; site of children’s marches."},
+    {term: "Robert F. Kennedy", definition: "Attorney General; supported civil rights enforcement."},
+    {term: "Medgar Evers", definition: "NAACP field secretary; civil rights activist; assassinated."},
+    {term: "Fannie Lou Hamer", definition: "Civil rights leader; voting rights activist."},
+    {term: "Robert Moses", definition: "Organized voter registration drives during civil rights movement."},
+    {term: "Herbert Lee", definition: "Civil rights activist; murdered for his work."},
+    {term: "James Meredith & Integration of Ole Miss", definition: "First Black student at University of Mississippi."},
+    {term: "Integration of University of Alabama", definition: "Forced by federal intervention in 1963."},
+    {term: '"Letter from Birmingham Jail"', definition: "MLK’s defense of nonviolent protest."},
+    {term: "The Children's Crusade", definition: "Student march in Birmingham during civil rights movement."},
+    {term: "Burke Marshall", definition: "Assistant Attorney General enforcing civil rights laws."},
+    {term: "George Wallace", definition: "Alabama governor; opposed integration."},
+    {term: "March on Washington", definition: "1963 civil rights march; MLK’s 'I Have a Dream' speech."},
+    {term: "16th Street Baptist Church", definition: "Birmingham church bombed by segregationists."},
+    {term: "Lee Harvey Oswald", definition: "Assassin of JFK."},
+    {term: "Impact of the Baby Boomers", definition: "Large youth population influenced culture and politics."},
+    {term: "in loco parentis", definition: "Universities acting in place of parents, limiting student freedoms."},
+    {term: "The Free Speech Movement", definition: "UC Berkeley student protests for free speech."},
+    {term: "Jack Weinberg", definition: "Activist involved in Free Speech Movement."},
+    {term: "Edmund 'Pat' Brown", definition: "California governor during 1960s civil rights changes."},
+    {term: "The New Left", definition: "1960s political movement advocating civil rights, antiwar, and social reforms."},
+    {term: "Barry Goldwater", definition: "Conservative presidential candidate 1964; opposed Great Society."},
+    {term: "Medicare", definition: "Health care program for elderly established in 1965."},
+    {term: "Medicaid", definition: "Health care program for low-income individuals established in 1965."},
+    {term: "Selma", definition: "1965 site of major voting rights marches."},
+    {term: "The Anti-War Movement", definition: "Protests against the Vietnam War."},
+    {term: "Immigration Act of 1965", definition: "Ended national-origin quotas; opened U.S. to more immigrants."},
+    {term: "Wilderness Act", definition: "1964 law protecting public lands and natural areas."}
+];
 
-        function nextCard() {
-            currentIndex = (currentIndex + 1) % cards.length;
-            showCard();
-        }
+let currentIndex = 0;
+const flashcard = document.getElementById("flashcard");
+const front = document.getElementById("front");
+const back = document.getElementById("back");
 
-        showCard();
-    </script>
+function showCard() {
+    front.innerText = cards[currentIndex].term;
+    back.innerText = cards[currentIndex].definition;
+    flashcard.classList.remove("flipped");
+}
+
+flashcard.addEventListener("click", () => {
+    flashcard.classList.toggle("flipped");
+});
+
+function nextCard() {
+    currentIndex = (currentIndex + 1) % cards.length;
+    showCard();
+}
+
+function prevCard() {
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    showCard();
+}
+
+showCard();
+</script>
+
 </body>
 </html>
